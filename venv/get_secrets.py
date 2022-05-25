@@ -69,9 +69,9 @@ logfile.close()
 view = input("View your passwords? (y or n) ")
 
 if view == "y":
-    print (prompt_nx_pass)
-    print (prompt_cat_pass)
-    print (prompt_ad_pass)
+    print ("Your stored Nexus password is %s" % prompt_nx_pass)
+    print ("Your stored TACACS password is %s" % prompt_cat_pass)
+    print ("Your stored Active Directory password is %s" % prompt_ad_pass)
     print ("Document created")
     print ("If these are incorrect, please re-run this script.")
 else:
