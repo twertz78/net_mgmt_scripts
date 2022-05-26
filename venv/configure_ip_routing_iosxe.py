@@ -146,6 +146,8 @@ for switch in switches:
     if show_run_default_gateway == "FAIL":
         continue
 
+    connection.send_command("write memory")
+
 document.close()
 log.close()
 
