@@ -20,31 +20,38 @@ from netmiko import ConnectHandler
 from py import secrets
 
 document = open('switches.txt', 'r')
-success_log = open('success_log.txt', 'a+')
-failure_log = open('failure_log.txt', 'a+')
+log = open('log.txt', 'a+')
+
 
 switches = document.read().splitlines()
 
 
-def test_switch_output(switch_output, test_string, command_string, switch_name, match=True):
+def test_switch_output(switch_output, test_string, command_string, match="matches"):
     """
     test_switch_output will take output from the switch and ensure it matches the expected response.
     The function will record successes and failures in the appropriate log file. If the test requires
     that the two values not match, the match value can be overridden with a "False" statement.
     """
-    if match == True:
+    if match == "matches":
         if switch_output == test_string:
-            success_log.write("%s successfully implemented on %s" % (command_string, switch_name))
+            log.write("SUCCESS: %s appears correctly\n\n" % command_string)
         else:
-            failure_log.write("%s failed validation on %s" % (command_string, switch_name))
-            print("%s failed validation on %s" % (command_string, switch_name))
+            log.write("FAILURE: %s failed validation\n\n" % command_string)
+            print("%s failed validation" % command_string)
             return "FAIL"
-    else:
-        if switch_output != test_string:
-            success_log.write("%s successfully implemented on %s" % (command_string, switch_name))
+    elif match == "contains":
+        if test_string in switch_output:
+            log.write("SUCCESS: %s is in output\n\n" % command_string)
         else:
-            failure_log.write("%s failed validation on %s" % (command_string, switch_name))
-            print("%s failed validation on %s" % (command_string, switch_name))
+            log.write("FAILURE: %s is not in output\n\n" % command_string)
+            print("%s failed validation" % command_string)
+            return "FAIL"
+    elif match == "no_match":
+        if switch_output != test_string:
+            log.write("SUCCESS: %s appears correctly\n\n" % command_string)
+        else:
+            log.write("FAILURE: %s failed validation\n\n" % command_string)
+            print("%s failed validation" % command_string)
             return "FAIL"
 
 
@@ -61,10 +68,10 @@ def find_ip_in_string(string, switch_name):
         list_of_words[2]
     )
     if ip_in_string:
-        success_log.write("Default gateway successfully identified for %s" % switch_name)
+        log.write("SUCCESS: Default gateway successfully identified for %s\n\n" % switch_name)
         return ip_in_string.group()
     else:
-        failure_log.write("No Valid IP Found in %s for %s" % (string, switch_name))
+        log.write("FAILURE: No Valid IP Found in %s for %s\n\n" % (string, switch_name))
         print("No Valid IP Found in %s for %s" % (string, switch_name))
         return "FAIL"
 
@@ -72,8 +79,7 @@ def find_ip_in_string(string, switch_name):
 for switch in switches:
     start_text = "\n==================STARTING SWITCH %s==================\n" % switch
     print(start_text)
-    success_log.write(start_text)
-    failure_log.write(start_text)
+    log.write(start_text)
     connection = ConnectHandler(
         device_type='cisco_xe',
         host=switch,
@@ -88,8 +94,7 @@ for switch in switches:
         len(show_run_default_gateway),
         0,
         "show running-config | include ip default-gateway",
-        switch,
-        False
+        "no_match",
     )
     if show_run_default_gateway_test == "FAIL":
         continue
@@ -98,54 +103,52 @@ for switch in switches:
     if gateway_ip == "FAIL":
         continue
 
-    # ip_route_configuration_set = [
-    #     "ip route 0.0.0.0 0.0.0.0 %s" % gateway_ip,
-    #     ]
-    # connection.send_config_set(ip_route_configuration_set)
+    ip_route_configuration_set = [
+        "ip route 0.0.0.0 0.0.0.0 %s" % gateway_ip,
+        ]
+    connection.send_config_set(ip_route_configuration_set)
 
     show_run_ip_route = connection.send_command("show running-config | include ip route")
     show_run_ip_route_test = test_switch_output(
         show_run_ip_route,
         "ip route 0.0.0.0 0.0.0.0 %s" % gateway_ip,
         "show running-config | include ip route",
-        switch,
+        "contains",
     )
     if show_run_ip_route_test == "FAIL":
         continue
 
-    # ip_routing_configuration_set = [
-    #     "ip routing"
-    # ]
-    # connection.send_config_set(ip_routing_configuration_set)
+    ip_routing_configuration_set = [
+        "ip routing"
+    ]
+    connection.send_config_set(ip_routing_configuration_set)
 
     show_run_ip_routing = connection.send_command("show running-config | include ip routing")
     show_run_ip_routing_test = test_switch_output(
         show_run_ip_routing,
         "ip routing",
         "show running-config | include ip routing",
-        switch,
     )
     if show_run_ip_routing_test == "FAIL":
         continue
 
-    # remove_default_gateway_configuration_set = [
-    #     "no ip default-gateway %s" % gateway_ip
-    # ]
-    # connection.send_config_set(remove_default_gateway_configuration_set)
+    remove_default_gateway_configuration_set = [
+        "no ip default-gateway %s" % gateway_ip
+    ]
+    connection.send_config_set(remove_default_gateway_configuration_set)
 
     show_run_default_gateway = connection.send_command("show running-config | include ip default-gateway")
     test_switch_output(
         len(show_run_default_gateway),
         0,
         "show running-config | include ip default-gateway",
-        switch,
     )
     if show_run_default_gateway == "FAIL":
         continue
 
 document.close()
-success_log.close()
-failure_log.close()
+log.close()
+
 
 complete_text = "\n==================ALL SWITCHES COMPLETE==================\n"
 print(complete_text)
