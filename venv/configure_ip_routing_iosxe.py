@@ -1,6 +1,6 @@
 """
 This script does the following:
-- Creates two log files, one for error handling and one to record successful changes.
+- Creates a log file for error handling and to record successful changes.
 - Parses a file with a list of Cisco IOS-XE switches (one per line).
 - Logs into each switch with stored credentials, enters enable mode if necessary.
 - Finds switch's default-gateway IP.
