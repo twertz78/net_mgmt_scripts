@@ -124,7 +124,7 @@ for switch in switches:
     logfile = open('%s_interface_statistics.csv' % switches[i][1], 'w')
     logfile.write("%s in %i seconds,Unicast,Multicast,Broadcast\n" % (switches[i][1], seconds_interval))
     for element in array_t_1:
-        print array_t_1[p][0]
+        print(array_t_1[p][0])
         unicast_per_second = ((int(array_t_2[p][1]) - int(array_t_1[p][1])) / seconds_interval)
         multicast_per_second = ((int(array_t_2[p][2]) - int(array_t_1[p][2])) / seconds_interval)
         broadcast_per_second = ((int(array_t_2[p][3]) - int(array_t_1[p][3])) / seconds_interval)
