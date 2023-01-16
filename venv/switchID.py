@@ -56,7 +56,7 @@ switches = [
 
 # first for loop cycles through all switches in list, must add password.
 # opening a log file to verify vlan config after the changes
-logfile = file('switch_ID.txt', 'w')
+logfile = open('switch_ID.txt', 'w')
 
 i = 0
 

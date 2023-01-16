@@ -50,7 +50,7 @@ subnets = [
     2422
 ]
 
-logfile = file('output.txt', 'w')
+logfile = open('output.txt', 'w')
 
 nxos_config = {
     'device_type': 'cisco_nxos',

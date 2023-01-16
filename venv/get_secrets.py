@@ -1,4 +1,6 @@
-import base64, os, getpass
+import base64
+import getpass
+import os
 
 prompt_nx_uid = input("Nexus User ID: ")
 prompt_cat_uid = input("TACACS User ID: ")
@@ -69,10 +71,10 @@ logfile.close()
 view = input("View your passwords? (y or n) ")
 
 if view == "y":
-    print ("Your stored Nexus password is %s" % prompt_nx_pass)
-    print ("Your stored TACACS password is %s" % prompt_cat_pass)
-    print ("Your stored Active Directory password is %s" % prompt_ad_pass)
-    print ("Document created")
-    print ("If these are incorrect, please re-run this script.")
+    print("Your stored Nexus password is %s" % prompt_nx_pass)
+    print("Your stored TACACS password is %s" % prompt_cat_pass)
+    print("Your stored Active Directory password is %s" % prompt_ad_pass)
+    print("Document created")
+    print("If these are incorrect, please re-run this script.")
 else:
-    print ("Document created")
+    print("Document created")

@@ -130,7 +130,7 @@ total_parts = len(switches) * len(vlans)
 completed_parts = 0
 
 for switch in switches:
-    logfile = file('%s.txt' % switches[i][1], 'w')
+    logfile = open('%s.txt' % switches[i][1], 'w')
 
     print("******************************")
     print("Starting switch %s." % switches[i][1])

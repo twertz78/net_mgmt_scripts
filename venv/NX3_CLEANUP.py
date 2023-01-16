@@ -129,7 +129,7 @@ for switch in switches:
         password=secrets.nx_pass
     )
     # opening a log file to verify vlan config after the changes
-    logfile = file('%s.txt' % switches[i][1], 'w')
+    logfile = open('%s.txt' % switches[i][1], 'w')
 
     logfile.write("===================================================\n")
 

@@ -10,7 +10,7 @@ switches = nodes.datacenterdevices
 
 for switch in switches:
     # log for each switch
-    logfile = file('%s.txt' % switch, 'w')
+    logfile = open('%s.txt' % switch, 'w')
     # use netmiko to log into switches
     device = ConnectHandler(
         device_type='cisco_nxos',

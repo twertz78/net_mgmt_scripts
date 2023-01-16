@@ -12,7 +12,12 @@ switches = [
 
 i = 0
 for switch in switches:
-    device = ConnectHandler(device_type='cisco_nxos', ip=switches[i][0], username=secrets.nx_uid, password=secrets.nx_pass)
+    device = ConnectHandler(
+        device_type='cisco_nxos',
+        ip=switches[i][0],
+        username=secrets.nx_uid,
+        password=secrets.nx_pass
+    )
     vlans_in_topo = device.send_command_expect("show fabricpath isis topology 0 vlan-range")
     if "No VNI configured." in vlans_in_topo:
         print("No VNI")

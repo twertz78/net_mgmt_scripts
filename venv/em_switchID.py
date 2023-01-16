@@ -53,7 +53,7 @@ switches = [
 
 # first for loop cycles through all switches in list, must add password.
 # opening a log file to verify vlan config after the changes
-logfile = file('em_switch_ID.txt', 'w')
+logfile = open('em_switch_ID.txt', 'w')
 
 i = 0
 
@@ -61,7 +61,12 @@ for switch in switches:
 
     print("Starting switch %s." % switches[i][1])
     # netmiko connection line
-    device = ConnectHandler(device_type='cisco_nxos', ip=switches[i][0], username=secrets.nx_uid, password=secrets.nx_pass)
+    device = ConnectHandler(
+        device_type='cisco_nxos',
+        ip=switches[i][0],
+        username=secrets.nx_uid,
+        password=secrets.nx_pass
+    )
 
     logfile.write("===================================================\n")
 

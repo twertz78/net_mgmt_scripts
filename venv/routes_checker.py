@@ -57,7 +57,7 @@ for switch in switches:
 
     device = ConnectHandler(**nxos_config)
 
-    logfile = file('%s.txt' % switches[i][1], 'w')
+    logfile = open('%s.txt' % switches[i][1], 'w')
 
     show_run = device.send_command("show run all")
     # ip_routes = device.send_command("show ip route sum vrf all")

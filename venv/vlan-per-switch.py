@@ -28,7 +28,7 @@ for switch in switches:
 
     device = ConnectHandler(**nxos_config)
 
-    logfile = file('%s.txt' % switches[i][1], 'w')
+    logfile = open('%s.txt' % switches[i][1], 'w')
 
     output = device.send_command("sho vlan brief | inc active | cut -c -37")  #
     logfile.write("%s" % output)

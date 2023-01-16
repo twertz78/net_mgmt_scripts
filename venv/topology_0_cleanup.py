@@ -74,7 +74,7 @@ vlans = [
 
 i = 0
 
-logfile = file('Topology_0_cleanup.txt', 'w')
+logfile = open('Topology_0_cleanup.txt', 'w')
 
 percent = float(100)/float(len(switches))
 percentage = percent/float(len(vlans))

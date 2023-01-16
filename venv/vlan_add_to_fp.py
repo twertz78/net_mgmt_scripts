@@ -39,7 +39,7 @@ for switch in switches:
     )
     print("Starting %s." % switches[j][1])
     # opening a log file to verify vlan config after the changes
-    logfile = file('%s.txt' % switches[j][1], 'w')
+    logfile = open('%s.txt' % switches[j][1], 'w')
     # get initial topology configuration to compare as it changes.
     output = device.send_command_expect('show fabricpath isis vlan-range')
     logfile.write(output)

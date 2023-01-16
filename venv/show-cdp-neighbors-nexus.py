@@ -9,7 +9,7 @@ SWITCH_PW='YOURPASSWORDHERE'
 TOUT=60
 
 
-logfile=file('%s.log' % SWITCH_IP, 'w')
+logfile=open('%s.log' % SWITCH_IP, 'w')
 
 child = pexpect.spawn('ssh %s@%s' % (SWITCH_UN,SWITCH_IP))
 #child = pexpect.spawn('ssh %s' % SWITCH_IP)
@@ -48,9 +48,9 @@ child.expect('#')
 data = ""
 data = child.before
 
-print
-print '\033[92m' + SWITCH_IP + "'s" + '\033[0m' +" CDP neighbors, excluding APs"
-print "----------------------------------------------------------------------------------------"
+print()
+print('\033[92m' + SWITCH_IP + "'s" + '\033[0m' + " CDP neighbors, excluding APs")
+print("----------------------------------------------------------------------------------------")
 
 # take the output and build a python list for each CDP entry.  Had to get creative since Cisco outputs two lines for each CDP entry.
 last_line = sum(1 for line in data.splitlines())
@@ -72,14 +72,14 @@ for line in data.splitlines():
 				#print line_list[0]+"\t"+line_list[1]+line_list[2]+"\t"+line_list[6]+"\t"+line_list[7]+line_list[8]
 				#print line_list[0]+"\t"+line_list[1]+line_list[2]
 				# set the first field to 40 characters for better formatting
-				print "%-40s" % line_list[0]+"\t"+line_list[1]+line_list[2]
+				print("%-40s" % line_list[0] + "\t" + line_list[1] + line_list[2])
 				output.write("%-40s" % line_list[0]+"\t"+line_list[1]+line_list[2] + "\n")
 		else:
 			single_line = ""
 			single_line = line
 next
 
-print "----------------------------------------------------------------------------------------"
+print("----------------------------------------------------------------------------------------")
 child.sendline('exit')
 
 output.close()

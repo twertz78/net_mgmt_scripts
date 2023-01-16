@@ -160,9 +160,14 @@ vlans = [
 
 ]
 
-logfile = file('vlan-ID-output.txt', 'w')
+logfile = open('vlan-ID-output.txt', 'w')
 
-device = ConnectHandler(device_type='cisco_nxos', ip='b06dc1.tele.iastate.edu', username=secrets.nx_uid, password=secrets.nx_pass)
+device = ConnectHandler(
+    device_type='cisco_nxos',
+    ip='b06dc1.tele.iastate.edu',
+    username=secrets.nx_uid,
+    password=secrets.nx_pass
+)
 
 for vlan in vlans:
     output = device.send_command("sho run vlan %s" % vlan)

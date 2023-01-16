@@ -134,10 +134,15 @@ def vlan_script(switch):
         2755
     ]
 
-    logfile = file('VLAN-Test.txt', 'w')
+    logfile = open('VLAN-Test.txt', 'w')
 
     # Just initiates the connection to the switch
-    device = ConnectHandler(device_type='cisco_nxos', ip=switch, username=secrets.nx_uid, password=secrets.nx_pass)
+    device = ConnectHandler(
+        device_type='cisco_nxos',
+        ip=switch,
+        username=secrets.nx_uid,
+        password=secrets.nx_pass
+    )
 
     for vlan in vlans:
 

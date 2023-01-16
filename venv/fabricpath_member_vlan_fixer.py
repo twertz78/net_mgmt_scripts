@@ -13,7 +13,7 @@ vlans = [
 ]
 
 # Create logfile
-logfile = file('fabricpath_member_vlan_fixed.txt', 'w')
+logfile = open('fabricpath_member_vlan_fixed.txt', 'w')
 # ------------------------------------------------------------------------------------
 # The following three lines are for time calculation
 start_time = datetime.now()

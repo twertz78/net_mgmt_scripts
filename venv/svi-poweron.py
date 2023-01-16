@@ -6,7 +6,7 @@ from py import secrets
 switch = "10.10.0.175"
 timer = 20
 
-logfile = file('%s.log' % switch, 'a')
+logfile = open('%s.log' % switch, 'a')
 
 child = pexpect.spawn('ssh %s@%s' % (secrets.nx_uid, switch))
 child.timeout = 90

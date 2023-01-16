@@ -30,7 +30,7 @@ vlans = [
     '219'
 ]
 
-logfile = file('vlan-output.txt', 'w')
+logfile = open('vlan-output.txt', 'w')
 
 device = ConnectHandler(
     device_type='cisco_nxos',

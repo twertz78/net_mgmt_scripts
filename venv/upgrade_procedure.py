@@ -38,7 +38,7 @@ direction = 'put'
 for switch in switches:
 
     # Create logfile
-    logfile = file('%s.txt', 'w' % switches[i][1])
+    logfile = open('%s.txt', 'w' % switches[i][1])
 
     # provides the user screen info
     print("******************************")

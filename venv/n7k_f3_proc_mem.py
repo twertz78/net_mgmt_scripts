@@ -30,7 +30,7 @@ import syslog
 import re
 
 if __name__ == "__main__":
-    if len(sys.argv)>1:
+    if len(sys.argv) > 1:
         rss_max = int(sys.argv[1])
     else:
         rss_max = 800000
@@ -43,17 +43,19 @@ if __name__ == "__main__":
             if mod_fnd:
                 slot = mod_fnd.group(1)
                 part_number = mod_fnd.group(2).strip()
-                module_data.append({"slot":slot, "part_number":part_number})
+                module_data.append({"slot": slot, "part_number": part_number})
         if module_data:
             for module in module_data:
-                sh_system_proc_mem = cli("slot {} quoted 'show system internal process memory | inc PID|ipfib | ex egrep'".format(module["slot"]))
+                sh_system_proc_mem = cli(
+                    "slot {} quoted 'show system internal process memory | inc PID|ipfib | ex egrep'".format(
+                        module["slot"]))
                 if sh_system_proc_mem:
                     for line in sh_system_proc_mem.splitlines():
                         if "/isan/bin/ipfib" in line:
                             pid, tty, stat, time, majflt, trs, rss, vsz, mem, cmd = line.split()
-                            #print("PID: {} RSS:{}".format(pid, rss))
+                            # print("PID: {} RSS:{}".format(pid, rss))
                             rss = int(rss)
                             if rss > rss_max:
-                                msg = "Module {} in slot {} has ipfib process with PID {} showing high memory usage. RSS={}".format(module["part_number"], module["slot"], pid, rss)
+                                msg = "Module {} in slot {} has ipfib process with PID {} showing high memory usage. RSS={}".format(
+                                    module["part_number"], module["slot"], pid, rss)
                                 syslog.syslog(1, msg)
-

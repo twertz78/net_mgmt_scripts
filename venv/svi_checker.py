@@ -19,7 +19,7 @@ start_time = datetime.now()
 total_parts = len(switches) * len(vlans)
 completed_parts = 0
 
-logfile = file('SVI_LOCATION.txt', 'w')
+logfile = open('SVI_LOCATION.txt', 'w')
 
 for switch in switches:
 

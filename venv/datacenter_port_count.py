@@ -13,7 +13,7 @@ completed_parts = 0
 
 all_interfaces_down = 0
 all_total_interfaces = 0
-logfile = file('datacenter_interface_usage.csv', 'w')
+logfile = open('datacenter_interface_usage.csv', 'w')
 
 logfile.write("Switch name,Interfaces in Use,Total Interfaces,Fill rate\n")
 

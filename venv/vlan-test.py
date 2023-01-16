@@ -2,7 +2,7 @@ from netmiko import ConnectHandler
 
 from py import secrets
 
-logfile = file('vlan-ID-test.txt', 'w')
+logfile = open('vlan-ID-test.txt', 'w')
 
 device = ConnectHandler(
     device_type = 'cisco_nxos',

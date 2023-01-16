@@ -23,7 +23,7 @@ switches = [
     'switch-m222175ag28nx56128.tele.iastate.edu'
 ]
 
-logfile = file('output.txt', 'w')
+logfile = open('output.txt', 'w')
 
 
 for switch in switches:

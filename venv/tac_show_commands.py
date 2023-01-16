@@ -23,7 +23,7 @@ total_parts = len(switches) * len(commands)
 completed_parts = 0
 # ---------------------------------------------------------------------------------------
 
-logfile = file('2019_05_08_interface_descriptions.csv', 'w')
+logfile = open('2019_05_08_interface_descriptions.csv', 'w')
 
 i = 0
 # iterate through each switch

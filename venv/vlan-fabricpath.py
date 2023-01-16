@@ -808,7 +808,7 @@ for switch in switches:
         password=secrets.nx_pass
     )
     # opening a log file to verify vlan config after the changes
-    logfile = file('%s.txt' % switch, 'w')
+    logfile = open('%s.txt' % switch, 'w')
     # get initial topology configuration to compare as it changes.
     output = device.send_command_expect('show fabricpath topology vlan')
     logfile.write(output)

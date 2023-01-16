@@ -11,7 +11,7 @@ from py import nodes, secrets
 switches = nodes.datacenterdevices
 
 # This is the "temporary" script that I have to create dynamically
-new_file = file('temp_script.py', 'w')
+new_file = open('temp_script.py', 'w')
 
 i = 0
 
